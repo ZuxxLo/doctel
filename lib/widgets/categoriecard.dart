@@ -3,7 +3,11 @@ class CategorieCard extends StatelessWidget {
   final String title;
   final String image;
 
-  const CategorieCard({Key? key , required this.title , required this.image}) : super(key: key);
+  const CategorieCard({
+    Key? key ,
+    required this.title ,
+     required this.image
+    }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +22,13 @@ class CategorieCard extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(50.0)
               ),
-              height:MediaQuery.of(context).size.height * 0.1 ,
-              width: MediaQuery.of(context).size.width * 0.2,
+              height:MediaQuery.of(context).size.height * 0.08 ,
+              width: MediaQuery.of(context).size.width * 0.16,
               child:Image(image: AssetImage(image)) ,
             ),
             Padding(
               padding:const EdgeInsets.only(top: 8.0) ,
-              child: Text(title , style: const TextStyle(fontWeight: FontWeight.w500 ),),
+              child: Text(title , style: const TextStyle(fontWeight: FontWeight.w700 ),),
             )
           ],
         ),

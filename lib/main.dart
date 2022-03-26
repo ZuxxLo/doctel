@@ -1,23 +1,31 @@
-import 'package:esiproject/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'Page/SplashScreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const LoginDoctell());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class LoginDoctell extends StatelessWidget {
+  const LoginDoctell({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Color _PrimaryColor = HexColor("#397EF5");
+    Color _accentColor = Colors.lightBlueAccent;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Login Logout Page',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: _PrimaryColor,
+        scaffoldBackgroundColor: Colors.grey.shade100, 
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: _accentColor),
+        primarySwatch: Colors.grey,
       ),
-      home: HomePgae(),
+      home: const SplashScreen(title: 'Doctell Login Page'),
     );
   }
 }
+
+
