@@ -1,7 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'widget_header.dart';
+
+import 'Header_widget.dart';
 
 class buttomNavBar extends StatefulWidget {
   const buttomNavBar({Key? key}) : super(key: key);
@@ -21,12 +22,13 @@ class _buttomNavBarState extends State<buttomNavBar>
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
     return Scaffold(
       body : SingleChildScrollView(
       child: Column(children: [
         Container(
-            height: 200,
-            child: HeaderWidget(200,false,Icons.notification_add
+            height: h*0.2,
+            child: HeaderWidget(h*0.2,false,Icons.notification_add
             ),
           ),
       ]),

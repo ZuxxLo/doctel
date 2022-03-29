@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Page/verification_page.dart';
 import 'package:flutter_application_1/common/them_helper.dart';
 import 'login_page.dart';
-import 'package:flutter_application_1/Page/widget_header.dart';
+import 'widgets/header_widget.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
