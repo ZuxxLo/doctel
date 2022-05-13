@@ -1,13 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Page/choose_type.dart';
-import 'package:flutter_application_1/Page/homepage.dart';
+import 'package:flutter_application_1/Page/profile_page.dart';
 import 'package:flutter_application_1/common/them_helper.dart';
-import 'Header_widget.dart';
+import 'package:flutter_application_1/homepage.dart';
+import 'Widgets/Header_widget.dart';
 import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -21,36 +22,36 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
+      double h = MediaQuery.of(context).size.height;
+      double w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body: 
+      SafeArea(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Stack(
-                children: [
-                  Container(
-                      height: h * 0.32,
-                      child: HeaderWidget(
-                        h * 0.33,
-                        false,
-                        Icons.person,
-                      )),
-                  Center(
-                    child: SizedBox(
-                        height: h * 0.25,
-                        width: w * 0.2,
-                        child: const Center(
+                  children: [
+                    Container(
+                    height: h*0.32,
+                    child: HeaderWidget(h*0.33, false, Icons.person,)
+                     ),
+                     Center(
+                       child: Container(    
+                         height: h*0.25,
+                         width: w*0.2,
+                        child:
+                        Center(
                           child: Image(
-                            image: AssetImage("img/LogoWhite.png"),
-                          ),
-                        )),
-                  ),
-                ],
-              ),
+                            image: AssetImage("img/LogoWhite.png"),),
+                        )
+                       ),
+                     ),
+                  ],
+                ),
+              
               SafeArea(
                 child: Container(
                     padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -58,33 +59,32 @@ class _LoginPageState extends State<LoginPage> {
                     //The login form
                     child: Column(
                       children: [
-                        //  Container(
-                        //     padding: EdgeInsets.all(10),
-                        //     decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(100),
-                        //       border: Border.all(
-                        //           width: 5, color: Colors.white),
-                        //       color: Colors.white,
-                        //       boxShadow: [
-                        //         BoxShadow(
-                        //           color: Colors.black12,
-                        //           blurRadius: 20,
-                        //           offset: const Offset(5, 5),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     child: Icon(
-                        //       Icons.person,
-                        //       color: Colors.grey.shade900,
-                        //       size: 80.0,
-                        //     ),
-                        //   ),
-                        //   SizedBox(height:10),
+                            //  Container(
+                            //     padding: EdgeInsets.all(10),
+                            //     decoration: BoxDecoration(
+                            //       borderRadius: BorderRadius.circular(100),
+                            //       border: Border.all(
+                            //           width: 5, color: Colors.white),
+                            //       color: Colors.white,
+                            //       boxShadow: [
+                            //         BoxShadow(
+                            //           color: Colors.black12,
+                            //           blurRadius: 20,
+                            //           offset: const Offset(5, 5),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //     child: Icon(
+                            //       Icons.person,
+                            //       color: Colors.grey.shade900,
+                            //       size: 80.0,
+                            //     ),
+                            //   ),
+                            //   SizedBox(height:10),
                         Container(
-                            height: h * 0.12,
-                            child:
-                                Image(image: AssetImage("img/blueLogo.png"))),
-                        const Text(
+                          height: h*0.12 ,
+                          child: Image(image:AssetImage("img/blueLogo.png"))),
+                        Text(
                           "Sign into your account",
                           style: TextStyle(color: Colors.grey),
                         ),
@@ -93,58 +93,55 @@ class _LoginPageState extends State<LoginPage> {
                         //   style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
                         // ),
                         SizedBox(
-                          height: h * 0.015,
+                          height: h*0.015,
                         ),
                         Form(
                             key: _formKey,
                             child: Column(
                               children: [
                                 TextFormField(
+                                  
                                   decoration: ThemHelper().textInputDecoration(
-                                      'User Name', 'Enter your user name'),
-                                  validator: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Please enter your user name";
-                                    }
-                                    return null;
-                                  },
+                                   'User Name', 'Enter your user name'),
+                                validator: (val) {
+                                if (val!.isEmpty) {
+                                  return "Please enter your user name";
+                                }
+                                return null;
+                              },
+                                      
+                                  
                                 ),
                                 SizedBox(
-                                  height: h * 0.03,
+                                  height: h*0.03,
                                 ),
                                 TextFormField(
                                   obscureText: true,
                                   decoration: ThemHelper().textInputDecoration(
                                       'Password', 'Enter your password'),
-                                  validator: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Please enter your password";
-                                    }
-                                    return null;
-                                  },
+                                      validator: (val) {
+                                if (val!.isEmpty) {
+                                  return "Please enter your password";
+                                }
+                                return null;
+                              },
+                                  
                                 ),
                                 SizedBox(
-                                  height: h * 0.018,
+                                  height: h*0.018,
                                 ),
                                 Container(
                                   margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
                                   alignment: Alignment.topRight,
                                   child: GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ForgotPasswordPage()),
-                                      );
-                                    },
-                                    child: const Text(
-                                      "Forgot your password?",
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
+                                    Navigator.push( context, MaterialPageRoute( builder: (context) => ForgotPasswordPage()), 
+                                    );},
+                                    child: Text( "Forgot your password?", style: TextStyle( color: Colors.grey, ),
                                   ),
+                                  
+                                  ),
+                                  
                                 ),
                                 Container(
                                   decoration:
@@ -156,22 +153,21 @@ class _LoginPageState extends State<LoginPage> {
                                           EdgeInsets.fromLTRB(40, 10, 40, 10),
                                       child: Text(
                                         'sign in'.toUpperCase(),
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             fontSize: 19,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                       ),
                                     ),
                                     onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        Navigator.of(context)
-                                            .pushAndRemoveUntil(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomePgae()),
-                                                (Route<dynamic> route) =>
-                                                    false);
-                                      }
+                                     if (_formKey.currentState!.validate()) {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePgae()
+                                      ),
+                                          (Route<dynamic> route) => false
+                                  );
+                                }
                                     },
                                   ),
                                 ),
@@ -179,8 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                                   margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
                                   //  child:Text("Don't have an account? Create!"),
                                   child: Text.rich(TextSpan(children: [
-                                    const TextSpan(
-                                        text: "Don't have an account?"),
+                                    TextSpan(text: "Don't have an account?"),
                                     TextSpan(
                                       text: "Create!",
                                       recognizer: TapGestureRecognizer()

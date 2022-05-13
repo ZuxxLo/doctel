@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'doctors.dart';
 
+import '../../model/doctors.dart';
 
 
 
@@ -105,11 +105,12 @@ class DoctorCard extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.3,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50)),
-                          child: const CircleAvatar(
+                          child: CircleAvatar(
                             radius: 45,
                               
                               backgroundColor: Colors.white,
-                              child: Image(image:AssetImage('assets/images/doc4.png'))
+                               child:
+                                Image(image: AssetImage(this.doc.image))
                               ),
                             ),
                           

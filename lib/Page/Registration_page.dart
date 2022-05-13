@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/them_helper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'Header_widget.dart';
+import 'Widgets/Header_widget.dart';
 import 'profile_page.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -50,11 +50,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   border:
                                       Border.all(width: w*0.005, color: Colors.white),
                                   color: Colors.white,
-                                  boxShadow: const [
+                                  boxShadow: [
                                     BoxShadow(
                                       color: Colors.black12,
                                       blurRadius: 20,
-                                      offset: Offset(5, 5),
+                                      offset: const Offset(5, 5),
                                     ),
                                   ],
                                 ),

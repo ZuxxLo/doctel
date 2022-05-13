@@ -4,7 +4,7 @@ import 'package:flutter_application_1/Page/profile_page.dart';
 import 'package:flutter_application_1/common/them_helper.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
-import 'Header_widget.dart';
+import 'Widgets/Header_widget.dart';
 
 class VerificationPage extends StatefulWidget {
   VerificationPage({Key? key}) : super(key: key);
