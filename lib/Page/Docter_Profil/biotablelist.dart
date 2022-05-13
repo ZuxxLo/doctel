@@ -3,7 +3,7 @@ import 'package:maps_launcher/maps_launcher.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class BioTableList extends StatelessWidget {
-  const BioTableList({
+  const BioTableList({ 
     Key? key,
   }) : super(key: key);
 
