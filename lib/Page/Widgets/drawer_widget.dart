@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Page/Login_page.dart';
 import 'package:flutter_application_1/Page/Registration_page.dart';
 import 'package:flutter_application_1/Page/profile_page.dart';
+import '../Mes_Rdvs/all_rdvs.dart';
 import './Drawer_Items.dart';
 import 'Drawer_header.dart';
+import 'package:get/get.dart';
 class drawer_widget extends StatefulWidget {
   @override
   State<drawer_widget> createState() => _drawer_widgetState();
@@ -45,11 +47,11 @@ class _drawer_widgetState extends State<drawer_widget>
                   
                 ),
                 title: Text(
-                  "All Appointments",
+                  "Appointments History",
                   style: TextStyle(
                       fontSize: h*0.022),
                 ),
-                onTap: () {
+                onTap: () {Get.to(()=> AllMesrdv(),transition: Transition.leftToRight);
                   
                 },),
                  ListTile(

@@ -17,6 +17,7 @@ class _TableCalendar extends State<Calendar> {
   DateTime? _selectedDay;
   @override
   void initState() {
+    //setDateOfNewDoctor();
   }
 
   @override

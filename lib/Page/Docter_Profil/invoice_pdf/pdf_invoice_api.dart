@@ -152,7 +152,7 @@ class PdfInvoiceApi {
           
         }));
 
-    return PdfApi.saveDocument(name: 'my_invoice.pdf', pdf: pdf);
+    return PdfApi.saveDocument(name: 'my_ticket.pdf', pdf: pdf);
   }
 
   static Widget buildInvoice(Invoice invoice) {

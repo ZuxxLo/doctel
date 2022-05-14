@@ -1,11 +1,6 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../Docter_Profil/profil_page.dart';
-import '../Docter_Profil/time_buttons.dart';
 import 'constants.dart';
 
 class BodyMesRdvs extends StatefulWidget {
@@ -242,14 +237,14 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
       setState(() {
         doctors.clear();
 
-        event.docs.forEach((element) {
+        for (var element in event.docs) {
           doctors.add(element.data());
-        });
+        }
       });
     });
   }
 
-  CancelAppointment() async {
+  _cancelAppointment() async {
     int r = 77;
     switch (readTimestampTime(doctors[iii]['date'])) {
       case '08:00':
@@ -346,7 +341,7 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             title: const Center(child: Text('Are You Sure ?')),
             content: SizedBox(
-              height:  200,
+              height: 200,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -360,16 +355,17 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
                   const Divider(thickness: 2),
                   ListTile(
                     horizontalTitleGap: 2,
-                    leading:const Icon(Icons.category),
+                    leading: const Icon(Icons.category),
                     title: Text('Cardiologue'),
                   ),
                   Divider(thickness: 2),
                   ListTile(
                     horizontalTitleGap: 2,
                     leading: const Icon(Icons.calendar_month),
-                    title: Text('${readTimestampDate(doctors[iii]['date'])} ''${readTimestampTime(doctors[iii]['date'])} '
-                                  ' - '
-                                  ' ${readTimestampTimeAddHour(doctors[iii]['date'])}'),
+                    title: Text('${readTimestampDate(doctors[iii]['date'])} '
+                        '${readTimestampTime(doctors[iii]['date'])} '
+                        ' - '
+                        ' ${readTimestampTimeAddHour(doctors[iii]['date'])}'),
                   ),
                 ],
               ),
@@ -382,8 +378,9 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
                   child: const Text('Close')),
               TextButton(
                 onPressed: () {
-                  CancelAppointment();
+                  _cancelAppointment();
                   Navigator.pop(context);
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 child: const Text('Delete'),

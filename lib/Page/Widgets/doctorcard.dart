@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Page/Docter_Profil/profil_page.dart';
 import 'package:get/get.dart';
 import '../../model/doctors.dart';
-
-
-
+import '../Docter_Profil/time_buttons.dart';
 
 class DoctorCard extends StatelessWidget {
   final Doctor doc;
@@ -17,7 +15,11 @@ class DoctorCard extends StatelessWidget {
         padding: const EdgeInsets.only(top: 8, bottom: 8),
         child: InkWell(
           onTap: () {
-            Get.to(()=> DoctorPage());
+            Get.to(() => DoctorPage(), transition: Transition.cupertino);
+            itim = 77;
+            controller.unselectAll();
+
+            disabledIndex.clear();
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 20, left: 8.0),
@@ -104,19 +106,15 @@ class DoctorCard extends StatelessWidget {
                         ],
                       ),
                       Container(
-                          //This is The Photo of The Card
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50)),
-                          child: CircleAvatar(
+                        //This is The Photo of The Card
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50)),
+                        child: CircleAvatar(
                             radius: 45,
-                              
-                              backgroundColor: Colors.white,
-                               child:
-                                Image(image: AssetImage(this.doc.image))
-                              ),
-                            ),
-                          
+                            backgroundColor: Colors.white,
+                            child: Image(image: AssetImage(this.doc.image))),
+                      ),
                     ],
                   )
                 ],

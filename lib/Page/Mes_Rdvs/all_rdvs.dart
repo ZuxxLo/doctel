@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'all_mes_rdvs.dart';
 import 'constants.dart';
-import 'body_mes_rdvs.dart';
-import 'new_body_mes_rdvs.dart';
 
-class Mesrdv extends StatelessWidget {
-  const Mesrdv({Key? key}) : super(key: key);
+class AllMesrdv extends StatelessWidget {
+  const AllMesrdv({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
+      appBar: rdvAppBar(),
       backgroundColor: bcgcolor,
-      body: NewBodyMesRdvs(),
+      body: const BodyAllMesRdvs(),
     );
   }
 
@@ -18,10 +18,11 @@ class Mesrdv extends StatelessWidget {
     return AppBar(
       backgroundColor: bcgcolor,
       leading: const BackButton(color: Colors.black),
-      titleSpacing: -15,
+      centerTitle: true,
       title: const Text(
-        "Retour",
+        "Appointments History",
         style: TextStyle(color: Colors.black),
+
       ),
       elevation: 0,
     );
