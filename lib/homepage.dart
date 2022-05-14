@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Page/Mes_Rdvs/mes_rdvs.dart';
 import 'package:flutter_application_1/Page/profile_page.dart';
 import 'Page/Widgets/Header_widget.dart';
 import 'Page/Widgets/categoriecard.dart';
@@ -11,7 +12,6 @@ import 'model/doctors.dart';
 class HomePgae extends StatefulWidget {
   int selectedindex = 1;
   @override
-  
   _HomePgaeState createState() => _HomePgaeState();
 }
 
@@ -39,16 +39,13 @@ List<Widget> items = [
 ];
 final _list = Doctor.blog();
 final _list2 = Doctor.blog2();
-List<Widget> mypages = [ProfilePage(),
- home(),
-  Text("data")];
+List<Widget> mypages = [ProfilePage(), home(), Mesrdv()];
 
 class _HomePgaeState extends State<HomePgae> {
   int selectedindex = 1;
 
   // const buttomNavBar({Key? key}) : super(key: key);
   @override
-  
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -60,7 +57,6 @@ class _HomePgaeState extends State<HomePgae> {
     ];
 
     return Scaffold(
-      
       backgroundColor: Colors.grey.shade50,
 
       drawer: drawer_widget(),
@@ -98,10 +94,8 @@ class _HomePgaeState extends State<HomePgae> {
               label: 'Appointments'),
         ],
       ),
-      body:
-      
-           mypages.elementAt(selectedindex),
-        //  home(h: h),
+      body: mypages.elementAt(selectedindex),
+      //  home(h: h),
 
       // bottomNavigationBar: Padding(
       //   padding: const EdgeInsets.all(20),
@@ -148,29 +142,27 @@ class home extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     final double h = MediaQuery.of(context).size.height;
 
     return SingleChildScrollView(
-        child: Column(
-    children: [
-      Stack(children: <Widget>[
-        SizedBox(
-          height: h * 0.23,
-          child: HeaderWidget(h * 0.23, false, Icons.notification_add),
-        ),
-        Container(
-            padding: const EdgeInsets.only(top: 50),
-            child: const SearchInput()),
-      ]),
-      SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(7.0),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      child: Column(
+        children: [
+          Stack(children: <Widget>[
+            SizedBox(
+              height: h * 0.23,
+              child: HeaderWidget(h * 0.23, false, Icons.notification_add),
+            ),
+            Container(
+                padding: const EdgeInsets.only(top: 50),
+                child: const SearchInput()),
+          ]),
+          SafeArea(
+              child: Padding(
+            padding: const EdgeInsets.all(7.0),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const MyTitle(title: 'Categories', fontsize: 25),
               const Padding(padding: EdgeInsets.only(top: 8.0)),
               SizedBox(
@@ -178,7 +170,6 @@ class home extends StatelessWidget {
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: cat.length,
-                    
                     itemBuilder: (context, index) {
                       return CategorieCard(
                           title: cat[index], image: img[index]);
@@ -204,9 +195,9 @@ class home extends StatelessWidget {
                         return DoctorCard(doc: _list[index]);
                       }))
             ]),
-      )),
-    ],
-        ),
-      );
+          )),
+        ],
+      ),
+    );
   }
 }

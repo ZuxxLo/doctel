@@ -37,6 +37,21 @@ class _drawer_widgetState extends State<drawer_widget>
                   height: 15,//pading between items
                 ),
                 SizedBox(height:h*0.05),
+                ListTile(
+                leading: Icon(
+                  Icons.list_alt,
+                  size: h*0.035,
+                  color: Colors.black,
+                  
+                ),
+                title: Text(
+                  "All Appointments",
+                  style: TextStyle(
+                      fontSize: h*0.022),
+                ),
+                onTap: () {
+                  
+                },),
                  ListTile(
                 leading: Icon(
                   Icons.edit,

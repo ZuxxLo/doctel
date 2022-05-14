@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_1/Page/Docter_Profil/profil_page.dart';
+import 'package:get/get.dart';
 import '../../model/doctors.dart';
 
 
@@ -15,7 +16,9 @@ class DoctorCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 8, bottom: 8),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Get.to(()=> DoctorPage());
+          },
           child: Padding(
             padding: const EdgeInsets.only(right: 20, left: 8.0),
             child: Material(

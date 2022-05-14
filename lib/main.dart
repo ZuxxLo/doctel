@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/homepage.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'Page/SplashScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+   await Firebase.initializeApp();
   runApp(const LoginDoctell());
 }
 
@@ -14,7 +19,7 @@ class LoginDoctell extends StatelessWidget {
   Widget build(BuildContext context) {
     Color _PrimaryColor = HexColor("#397EF5");
     Color _accentColor = Colors.lightBlueAccent;
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Login Logout Page',
       theme: ThemeData(
@@ -23,7 +28,7 @@ class LoginDoctell extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: _accentColor),
         primarySwatch: Colors.grey,
       ),
-      home: const SplashScreen(title: 'Doctell Login Page'),
+      home: HomePgae()//const SplashScreen(title: 'Doctell Login Page'),
     );
   }
 }
