@@ -16,7 +16,8 @@ class _TableCalendar extends State<Calendar> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   @override
-  void initState() {}
+  void initState() {
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +30,12 @@ class _TableCalendar extends State<Calendar> {
           if (!isSameDay(_selectedDay, selectedDay)) {
             // Call `setState()` when updating the selected day
             setState(() {
-              DateTime dateTime = DateTime.now();
+              // DateTime dateTime = DateTime.now();
               //   print(dateTime.timeZoneName);
               //  print(dateTime.timeZoneOffset);
               itim = 77;
               iday = DateTime(
                   selectedDay.year, selectedDay.month, selectedDay.day);
-              print(iday);
               // print( 'day ${selectedDay.day}-${selectedDay.month}-${selectedDay.year} selected');
               disableIndexes();
               //  print('*************************');

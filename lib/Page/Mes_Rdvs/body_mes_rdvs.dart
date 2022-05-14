@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../Docter_Profil/profil_page.dart';
 import '../Docter_Profil/time_buttons.dart';
 import 'constants.dart';
 
@@ -21,6 +24,9 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
     super.initState();
   }
 
+  List<int> disabledIndexv2 = [];
+  late var iii;
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -36,8 +42,7 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
             ),
             Text(
               "Hurray! You don't have any appoitments!",
-              style: TextStyle(
-                  fontSize: 20, color: Colors.grey),
+              style: TextStyle(fontSize: 20, color: Colors.grey),
             )
           ],
         ),
@@ -64,7 +69,8 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
                         child: Row(
                           children: <Widget>[
                             const CircleAvatar(
-                              backgroundImage: AssetImage('assets/images/doc4.png'),
+                              backgroundImage:
+                                  AssetImage('assets/images/doc4.png'),
                               radius: 32.5,
                             ),
                             SizedBox(width: w * 0.02),
@@ -88,70 +94,9 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
                               ),
                             ),
                             IconButton(
-                                onPressed: ()async  {
-                                  int r = 77;
-                                  switch (readTimestampTime(
-                                      doctors[index]['date'])) {
-                                    case '08:00':
-                                      {
-                                        r = 0;
-                                      }
-                                      break;
-                                    case '09:00':
-                                      {
-                                        r = 1;
-                                      }
-                                      break;
-                                    case '10:00':
-                                      {
-                                        r = 2;
-                                      }
-                                      break;
-                                    case '11:00':
-                                      {
-                                        r = 3;
-                                      }
-                                      break;
-                                    case '14:00':
-                                      {
-                                        r = 4;
-                                      }
-                                      break;
-                                    case '15:00':
-                                      {
-                                        r = 5;
-                                      }
-                                      break;
-                                  }
-                                 
-                                  disabledIndex[r] = 77;
-                                  var ref = FirebaseFirestore.instance
-                                      .collection('doctors');
-                                  await ref
-                                      .doc(
-                                          'yzreO3TrzblximKsxdz2') //the doctor clicked uid
-                                      .collection('day-month-year')
-                                      .doc(readTdqsDate(doctors[index]['date']))
-                                      .update({'timeindex': disabledIndex});
-                                  var notref = FirebaseFirestore.instance
-                                      .collection('Appointments');
-                                  notref
-                                      .where('patientUID',
-                                          isEqualTo: '43vju27PaOZptGuNQvDC')
-                                      .where('doctorUID',
-                                          isEqualTo: 'yzreO3TrzblximKsxdz2')
-                                      .where('date',
-                                          isEqualTo: doctors[index]['date'])
-                                      .get()
-                                      .then((value) {
-                                    for (var element in value.docs) {
-                                      notref.doc(element.id).delete();
-                                    }
-                                  });
-                                
-                                  
-
-                                  //CancelAppointment();
+                                onPressed: () async {
+                                  iii = index;
+                                  _showMaterialDialog();
                                 },
                                 icon: Icon(
                                   Icons.cancel,
@@ -237,7 +182,7 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
         timestamp.toDate().add(const Duration(hours: 1)).toString()));
   }
 
-  String readTdqsDate(Timestamp timestamp) {
+  String readdateforcancel(Timestamp timestamp) {
     DateFormat format = DateFormat('yyyy-MM-dd 00:00:00.000');
     return format.format(DateTime.parse(timestamp.toDate().toString()));
   }
@@ -288,6 +233,9 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
   getPApp() async {
     doctorsref
         .where('patientUID', isEqualTo: '43vju27PaOZptGuNQvDC')
+        .where('date',
+            isGreaterThan:
+                Timestamp.fromDate(DateTime.now().add(Duration(minutes: 10))))
         .orderBy('date')
         .snapshots()
         .listen((event) {
@@ -302,16 +250,146 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
   }
 
   CancelAppointment() async {
-    var notref = FirebaseFirestore.instance.collection('Appointments');
-    await notref.doc('kw6kA1zlSCq0iuMIbNtz').delete();
-
-    var ref = FirebaseFirestore.instance.collection('doctors');
-    await ref
-        .doc('yzreO3TrzblximKsxdz2') //the doctor clicked uid
+    int r = 77;
+    switch (readTimestampTime(doctors[iii]['date'])) {
+      case '08:00':
+        {
+          r = 0;
+        }
+        break;
+      case '09:00':
+        {
+          r = 1;
+        }
+        break;
+      case '10:00':
+        {
+          r = 2;
+        }
+        break;
+      case '11:00':
+        {
+          r = 3;
+        }
+        break;
+      case '14:00':
+        {
+          r = 4;
+        }
+        break;
+      case '15:00':
+        {
+          r = 5;
+        }
+        break;
+    }
+    await FirebaseFirestore.instance
+        .collection('doctors')
+        .doc('yzreO3TrzblximKsxdz2')
         .collection('day-month-year')
-        .doc('2022-05-11 00:00:00.000')
-        .update({
-      'timeindex': [77, 77, 77, 77, 77, 77]
+        .doc(readdateforcancel(doctors[iii]['date']))
+        .get()
+        .then((value) async {
+      disabledIndexv2 = value['timeindex'].cast<int>();
+      disabledIndexv2[r] = 77;
+      await FirebaseFirestore.instance
+          .collection('doctors')
+          .doc('yzreO3TrzblximKsxdz2')
+          .collection('day-month-year')
+          .doc(readdateforcancel(doctors[iii]['date']))
+          .update({'timeindex': disabledIndexv2});
     });
+
+    var notref = FirebaseFirestore.instance.collection('Appointments');
+    notref
+        .where('patientUID', isEqualTo: '43vju27PaOZptGuNQvDC')
+        .where('doctorUID', isEqualTo: 'yzreO3TrzblximKsxdz2')
+        .where('date', isEqualTo: doctors[iii]['date'])
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        notref.doc(element.id).delete();
+      }
+    });
+  }
+
+  void _showMaterialDialog() {
+    SnackBar snackBar = SnackBar(
+      backgroundColor: Color.fromARGB(255, 205, 30, 30),
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            'Appointment cancled ',
+            style: TextStyle(fontSize: 17),
+          ),
+          Icon(
+            Icons.check_circle_outline,
+            color: Colors.white,
+          ),
+        ],
+      ),
+      duration: const Duration(seconds: 3),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            title: const Center(child: Text('Are You Sure ?')),
+            content: SizedBox(
+              height:  200,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    horizontalTitleGap: 2,
+                    leading: const Icon(Icons.person_outline),
+                    title: Text(
+                      doctors[iii]['DoctorsName'].toString(),
+                    ),
+                  ),
+                  const Divider(thickness: 2),
+                  ListTile(
+                    horizontalTitleGap: 2,
+                    leading:const Icon(Icons.category),
+                    title: Text('Cardiologue'),
+                  ),
+                  Divider(thickness: 2),
+                  ListTile(
+                    horizontalTitleGap: 2,
+                    leading: const Icon(Icons.calendar_month),
+                    title: Text('${readTimestampDate(doctors[iii]['date'])} ''${readTimestampTime(doctors[iii]['date'])} '
+                                  ' - '
+                                  ' ${readTimestampTimeAddHour(doctors[iii]['date'])}'),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Close')),
+              TextButton(
+                onPressed: () {
+                  CancelAppointment();
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                },
+                child: const Text('Delete'),
+              )
+            ],
+          );
+        });
   }
 }

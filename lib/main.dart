@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/homepage.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'Page/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +28,7 @@ class LoginDoctell extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: _accentColor),
         primarySwatch: Colors.grey,
       ),
-      home: const SplashScreen(title: 'Doctell Login Page'),
+      home: HomePgae()//const SplashScreen(title: 'Doctell Login Page'),
     );
   }
 }

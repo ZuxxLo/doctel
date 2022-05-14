@@ -295,7 +295,7 @@ class _BodyBioState extends State<BodyBio> with TickerProviderStateMixin {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             title: const Center(child: Text('Are You Sure ?')),
             content: SizedBox(
-              height: widget.h * 0.35, //248
+              height: widget.h * 0.28, //248
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
