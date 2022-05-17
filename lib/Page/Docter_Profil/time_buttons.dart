@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:group_button/group_button.dart';
 import 'const.dart';
@@ -20,7 +21,6 @@ class _TimeButtonsState extends State<TimeButtons> {
   @override
   void initState() {
     controller.disableIndexes([0, 1, 2, 3, 4, 5]); // must excute
-    
 
     super.initState();
   }
@@ -58,15 +58,17 @@ class _TimeButtonsState extends State<TimeButtons> {
                 timeSlotToDateTime();
                 //print('Button $itim selected');
                 dateToUpload = DateTime.now().withTime(timeSlotToDateTime());
+                t = Timestamp.fromDate(dateToUpload.add(DateTime.now().timeZoneOffset)).seconds ;
               }),
             });
   }
 }
 
-late DateTime dateToUpload;
+int t = 0;
+DateTime dateToUpload = DateTime.now();
 
 int timeSlotToDateTime() {
-   int r=77;
+  int r = 77;
   switch (itim) {
     case 0:
       {

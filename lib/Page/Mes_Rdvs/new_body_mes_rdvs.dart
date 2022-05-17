@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'constants.dart';
 
@@ -12,12 +13,14 @@ class NewBodyMesRdvs extends StatefulWidget {
 
   @override
   State<NewBodyMesRdvs> createState() => _NewBodyMesRdvs();
-} 
+}
 
-class _NewBodyMesRdvs extends State<NewBodyMesRdvs> { 
+class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
   @override
   void initState() {
     getPApp();
+    initializeDateFormatting();
+
     super.initState();
   }
 
@@ -101,9 +104,25 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
                                   IconButton(
                                       onPressed: () async {
                                         iii = index;
-                                        _showMaterialDialog();
+                                        Timestamp d =
+                                            snapshot.data!.docs[index]['date'];
+                                       
+                                        if (d.seconds -
+                                                Timestamp.fromDate(
+                                                        DateTime.now())
+                                                    .seconds -
+                                                3600 >
+                                            7200) {
+                                          _showMaterialDialog();
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(customSnackBar(
+                                                  'Too late to cancel ',
+                                                  Colors.red,
+                                                  icon: Icons.info_outline));
+                                        }
                                       },
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.cancel,
                                         color: Color.fromARGB(255, 144, 10, 0),
                                         size: 30,
@@ -174,7 +193,7 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 SizedBox(
                     width: 90, height: 90, child: CircularProgressIndicator()),
                 SizedBox(
@@ -195,40 +214,43 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
   ////////////////// TIME STAMP TO DATE TIME FOR AFFICHAGE
 
   String readTimestampDate(Timestamp timestamp) {
-    DateFormat format = DateFormat.yMMMMEEEEd();
+    DateFormat format = DateFormat.yMMMMEEEEd('fr');
     return format.format(DateTime.parse(timestamp.toDate().toString()));
   }
 
   String readTimestampTime(Timestamp timestamp) {
     DateFormat format = DateFormat('HH:mm');
-    return format.format(DateTime.parse(timestamp.toDate().subtract(DateTime.now().timeZoneOffset).toString()));
+    return format.format(DateTime.parse(
+        timestamp.toDate().subtract(DateTime.now().timeZoneOffset).toString()));
   }
 
   String readTimestampTimeAddHour(Timestamp timestamp) {
     DateFormat format = DateFormat('HH:mm');
-    return format.format(DateTime.parse(
-        timestamp.toDate().add(const Duration(hours: 1)).subtract(DateTime.now().timeZoneOffset).toString()));
+    return format.format(DateTime.parse(timestamp
+        .toDate()
+        .add(const Duration(hours: 1))
+        .subtract(DateTime.now().timeZoneOffset)
+        .toString()));
   }
 
   String readdateforcancel(Timestamp timestamp) {
     DateFormat format = DateFormat('yyyy-MM-dd 00:00:00.000');
-    return format.format(DateTime.parse(timestamp.toDate().add(DateTime.now().timeZoneOffset).toString()));
+    return format.format(DateTime.parse(
+        timestamp.toDate().add(DateTime.now().timeZoneOffset).toString()));
   }
 
   /////////////////////////////////////////////////////////////
-  
 
 /////////////////////////////////////////////////////////////////// GET doctors for ur appointementS
   List doctors = [];
   CollectionReference doctorsref =
       FirebaseFirestore.instance.collection('Appointments');
-
+  var fdsfds = Timestamp.fromDate(DateTime.now().add(Duration(hours: 1)));
   getPApp() async {
     doctorsref
-        .where('patientUID', isEqualTo: '43vju27PaOZptGuNQvDC')
-        .where('date',
-            isGreaterThan:
-                Timestamp.fromDate(DateTime.now().add(Duration(minutes: 10))))
+        .where('patientUID',
+            isEqualTo: '43vju27PaOZptGuNQvDC') //.add(Duration(hours: 1 ))
+        .where('date', isGreaterThan: Timestamp.fromDate(DateTime.now()))
         .orderBy('date')
         .snapshots()
         .listen((event) {
@@ -246,8 +268,8 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
       .collection('Appointments')
       .where('patientUID', isEqualTo: '43vju27PaOZptGuNQvDC')
       .where('date',
-          isGreaterThan:
-              Timestamp.fromDate(DateTime.now().add(Duration(minutes: 10))))
+          isGreaterThan: Timestamp.fromDate(
+              DateTime.now().subtract(Duration(minutes: 10))))
       .orderBy('date')
       .snapshots();
 
@@ -285,6 +307,7 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
         }
         break;
     }
+    
     await FirebaseFirestore.instance
         .collection('doctors')
         .doc('yzreO3TrzblximKsxdz2')
@@ -313,6 +336,12 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
         notref.doc(element.id).delete();
       }
     });
+    var ref = FirebaseFirestore.instance.collection('patients');
+    await ref
+        .doc('43vju27PaOZptGuNQvDC') //the doctor clicked uid
+        .collection('ClickDoc')
+        .doc('yzreO3TrzblximKsxdz2')
+        .set({'onceADay': false, 'timeleft': 0});
 
     _onLoading();
   }
@@ -386,9 +415,17 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
                   },
                   child: const Text('Close')),
               TextButton(
-                onPressed: () {
-                  _cancelAppointment();
-                  Navigator.pop(context);
+                onPressed: () async {
+                  try {
+                    final result = await InternetAddress.lookup('example.com');
+                    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+                      _cancelAppointment();
+                      Navigator.pop(context);
+                    }
+                  } on SocketException catch (_) {
+                    customSnackBar('There is no connection! ', Colors.red,
+                        icon: Icons.warning_amber);
+                  }
                 },
                 child: const Text('Delete'),
               )
@@ -443,5 +480,36 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
+  }
+
+  SnackBar customSnackBar(String customText, Color color, {IconData? icon}) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
+    SnackBar snackBar = SnackBar(
+      backgroundColor: color,
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            width: 4,
+          ),
+          Text(
+            customText + ' ',
+            style: TextStyle(fontSize: 17),
+          ),
+          Icon(
+            icon,
+            color: Colors.white,
+          ),
+        ],
+      ),
+      duration: const Duration(seconds: 3),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    return snackBar;
   }
 }

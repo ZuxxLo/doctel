@@ -9,7 +9,14 @@ import '../profil_page.dart';
 import '../time_buttons.dart';
 
 class PdfInvoiceApi {
-  static Future<File> generate(Invoice invoice) async {
+  static Future<File> generate(
+      String patientName,
+      String patientEmail,
+      int? patientPhone,
+      String doctorName,
+      String doctorEmail,
+      int? doctorPhone,
+      String dateApp) async {
     final pdf = Document();
     final imageJpg =
         (await rootBundle.load('assets/images/Logo.png')).buffer.asUint8List();
@@ -26,7 +33,8 @@ class PdfInvoiceApi {
             ),
             SizedBox(height: 20),
 
-            Table(columnWidths: {
+            Table(
+              columnWidths: {
                 0: const FlexColumnWidth(1),
                 1: const FlexColumnWidth(4),
               },
@@ -44,7 +52,7 @@ class PdfInvoiceApi {
                             Text('Name', style: const TextStyle(fontSize: 10)),
                           ])),
                       Container(
-                        child: Text('Fellah Mohammed Nassim',
+                        child: Text(patientName,//'Fellah Mohammed Nassim'
                             style: const TextStyle(fontSize: 10)),
                       )
                     ]),
@@ -55,7 +63,7 @@ class PdfInvoiceApi {
                         Text('email', style: const TextStyle(fontSize: 10)),
                       ])),
                   Container(
-                    child: Text('nassim@gmail.com',
+                    child: Text(patientName,//'nassim@gmail.com'
                         style: const TextStyle(fontSize: 10)),
                   )
                 ]),
@@ -68,14 +76,15 @@ class PdfInvoiceApi {
                             Text('phone', style: const TextStyle(fontSize: 10)),
                           ])),
                       Container(
-                        child:
-                            Text('065646593', style: const TextStyle(fontSize: 10)),
+                        child: Text(patientPhone.toString(),//'065646593'
+                            style: const TextStyle(fontSize: 10)),
                       )
                     ])
               ],
             ),
             ///////////////////////doc
-            Table(columnWidths: {
+            Table(
+              columnWidths: {
                 0: const FlexColumnWidth(1),
                 1: const FlexColumnWidth(4),
               },
@@ -91,8 +100,8 @@ class PdfInvoiceApi {
                         Text('Doctor', style: const TextStyle(fontSize: 10)),
                       ])),
                   Container(
-                    child:
-                        Text('Zelmati Yassine', style: const TextStyle(fontSize: 10)),
+                    child: Text(doctorName,//'Zelmati Yassine'
+                        style: const TextStyle(fontSize: 10)),
                   )
                 ]),
                 TableRow(
@@ -104,7 +113,7 @@ class PdfInvoiceApi {
                             Text('email', style: const TextStyle(fontSize: 10)),
                           ])),
                       Container(
-                        child: Text('Yassine@gmail.com',
+                        child: Text(doctorEmail,//'Yassine@gmail.com'
                             style: const TextStyle(fontSize: 10)),
                       )
                     ]),
@@ -115,14 +124,16 @@ class PdfInvoiceApi {
                         Text('phone', style: const TextStyle(fontSize: 10)),
                       ])),
                   Container(
-                    child: Text('0554786593', style: const TextStyle(fontSize: 10)),
+                    child: Text(doctorPhone.toString(),//'0554786593'
+                        style: const TextStyle(fontSize: 10)),
                   )
                 ])
               ],
             ),
             ////////////////////date
 
-            Table(columnWidths: {
+            Table(
+              columnWidths: {
                 0: const FlexColumnWidth(1),
                 1: const FlexColumnWidth(4),
               },
@@ -141,21 +152,19 @@ class PdfInvoiceApi {
                           ])),
                       Container(
                         child: Text(
-                            dateConfrimBox(
-                                DateTime.now().withTime(timeSlotToDateTime())),
+                            dateApp,  //dateConfrimBox(DateTime.now().withTime(timeSlotToDateTime()))
                             style: const TextStyle(fontSize: 10)),
                       )
                     ]),
               ],
             )
           ]);
-          
         }));
 
     return PdfApi.saveDocument(name: 'my_ticket.pdf', pdf: pdf);
   }
 
-  static Widget buildInvoice(Invoice invoice) {
+  static Widget buildInvoice() {
     return Column(children: [
       Table(
         border: const TableBorder(
@@ -183,7 +192,8 @@ class PdfInvoiceApi {
                   Text('email', style: const TextStyle(fontSize: 10)),
                 ])),
             Container(
-              child: Text('nassim@gmail.com', style: const TextStyle(fontSize: 10)),
+              child: Text('nassim@gmail.com',
+                  style: const TextStyle(fontSize: 10)),
             )
           ]),
           TableRow(
@@ -195,7 +205,8 @@ class PdfInvoiceApi {
                       Text('phone', style: const TextStyle(fontSize: 10)),
                     ])),
                 Container(
-                  child: Text('0778202192', style: const TextStyle(fontSize: 10)),
+                  child:
+                      Text('0778202192', style: const TextStyle(fontSize: 10)),
                 )
               ])
         ],
@@ -214,7 +225,8 @@ class PdfInvoiceApi {
                   Text('Doctor', style: const TextStyle(fontSize: 10)),
                 ])),
             Container(
-              child: Text('Zelmati Yassine', style: const TextStyle(fontSize: 10)),
+              child:
+                  Text('Zelmati Yassine', style: const TextStyle(fontSize: 10)),
             )
           ]),
           TableRow(
@@ -226,8 +238,8 @@ class PdfInvoiceApi {
                       Text('email', style: const TextStyle(fontSize: 10)),
                     ])),
                 Container(
-                  child:
-                      Text('Yassine@gmail.com', style: const TextStyle(fontSize: 10)),
+                  child: Text('Yassine@gmail.com',
+                      style: const TextStyle(fontSize: 10)),
                 )
               ]),
           TableRow(children: [
@@ -270,11 +282,11 @@ class PdfInvoiceApi {
     ]);
   }
 
-  static Widget buildTitle(Invoice invoice) => Column(children: [
+  static Widget buildTitle() => Column(children: [
         Text("Innovice"),
       ]);
 
-  static Widget buildHeader(Invoice invoice) => Column(
+  static Widget buildHeader() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 1 * PdfPageFormat.cm),
@@ -320,10 +332,20 @@ class PdfApi {
   }
 }
 
-void invoice() async {
-  final invoice = Invoice();
-  final pdfFile = await PdfInvoiceApi.generate(invoice);
+void invoice( String patientName,
+      String patientEmail,
+      int? patientPhone,
+      String doctorName,
+      String doctorEmail,
+      int? doctorPhone,
+      String dateApp) async {
+  final pdfFile = await PdfInvoiceApi.generate(  patientName,
+       patientEmail,
+       patientPhone,
+       doctorName,
+       doctorEmail,
+       doctorPhone,
+       dateApp);
   PdfApi.openFile(pdfFile);
 }
 
-class Invoice {}

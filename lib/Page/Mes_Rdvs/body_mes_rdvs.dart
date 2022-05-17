@@ -35,7 +35,7 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
               'assets/images/isEmpty.png',
               scale: 3.5,
             ),
-            Text(
+            const Text(
               "Hurray! You don't have any appoitments!",
               style: TextStyle(fontSize: 20, color: Colors.grey),
             )
@@ -93,9 +93,9 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
                                   iii = index;
                                   _showMaterialDialog();
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.cancel,
-                                  color: Color.fromARGB(255, 144, 10, 0),
+                                  color:  Color.fromARGB(255, 144, 10, 0),
                                   size: 30,
                                 ))
                           ],
@@ -310,7 +310,7 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
 
   void _showMaterialDialog() {
     SnackBar snackBar = SnackBar(
-      backgroundColor: Color.fromARGB(255, 205, 30, 30),
+      backgroundColor: const Color.fromARGB(255, 205, 30, 30),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
@@ -358,7 +358,7 @@ class _BodyMesRdvs extends State<BodyMesRdvs> {
                     leading: const Icon(Icons.category),
                     title: Text('Cardiologue'),
                   ),
-                  Divider(thickness: 2),
+                  const Divider(thickness: 2),
                   ListTile(
                     horizontalTitleGap: 2,
                     leading: const Icon(Icons.calendar_month),
