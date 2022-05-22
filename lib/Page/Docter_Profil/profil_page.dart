@@ -51,7 +51,7 @@ class DoctorPage extends StatelessWidget {
 }
 
 int itim = 77;
-DateTime iday = DateTime.utc(0); // the day selected from the callendar
+DateTime iday = DateTime.now(); // the day selected from the callendar
 bool isMAC = true; // make an appointment button
 
 class BodyBio extends StatefulWidget {
@@ -217,6 +217,7 @@ class _BodyBioState extends State<BodyBio> with TickerProviderStateMixin {
                           }
                         }
                       } on SocketException catch (_) {
+                        print('nno cennecetion');
                         customSnackBar('There is no connection!', Colors.red,
                             icon: Icons.warning_amber);
                       }
@@ -446,7 +447,15 @@ class _BodyBioState extends State<BodyBio> with TickerProviderStateMixin {
                   await makeddddAppointment();
 
 
-                 // invoice();
+                 invoice(
+                                                  'naaaaa',
+                                                  'patientEmail',
+                                                  0656598965,
+                                                  ['DoctorsName']
+                                                      .toString(),
+                                                  'mazl f collection email',
+                                                  448787,
+                                                  DateTime.now().toString());
                   customSnackBar('Appointment succeeded ',
                       Color.fromARGB(255, 88, 184, 115),
                       icon: Icons.check_circle_outline);
@@ -530,7 +539,7 @@ class _BodyBioState extends State<BodyBio> with TickerProviderStateMixin {
                 Text(
                     'You do already have an  appointment with this doctor \nTime Left to Click\n'),
                 TextWithCountdown(
-                    text: 'Time left to click', countValue: timeleft - d),
+                    text: 'Time left to click', countValue: time), //timeleft - d
               ],
             ),
           ),

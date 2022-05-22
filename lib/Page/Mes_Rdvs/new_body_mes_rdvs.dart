@@ -18,6 +18,7 @@ class NewBodyMesRdvs extends StatefulWidget {
 class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
   @override
   void initState() {
+    
     getPApp();
     initializeDateFormatting();
 
@@ -115,11 +116,11 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
                                             7200) {
                                           _showMaterialDialog();
                                         } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(customSnackBar(
+                                       
+                                            customSnackBar(
                                                   'Too late to cancel ',
                                                   Colors.red,
-                                                  icon: Icons.info_outline));
+                                                  icon: Icons.info_outline);
                                         }
                                       },
                                       icon: const Icon(
@@ -250,7 +251,7 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
     doctorsref
         .where('patientUID',
             isEqualTo: '43vju27PaOZptGuNQvDC') //.add(Duration(hours: 1 ))
-        .where('date', isGreaterThan: Timestamp.fromDate(DateTime.now()))
+        .where('date', isGreaterThan: Timestamp.fromDate(DateTime.now().add(Duration(hours: 1,minutes: 10))))
         .orderBy('date')
         .snapshots()
         .listen((event) {
@@ -269,7 +270,7 @@ class _NewBodyMesRdvs extends State<NewBodyMesRdvs> {
       .where('patientUID', isEqualTo: '43vju27PaOZptGuNQvDC')
       .where('date',
           isGreaterThan: Timestamp.fromDate(
-              DateTime.now().subtract(Duration(minutes: 10))))
+              DateTime.now().add(Duration(hours: 1,minutes: 10))))
       .orderBy('date')
       .snapshots();
 

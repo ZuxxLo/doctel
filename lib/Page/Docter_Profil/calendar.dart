@@ -16,6 +16,9 @@ class _TableCalendar extends State<Calendar> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   @override
+  void initState() {
+setDateOfNewDoctor();     super.initState();
+  }
  
 
   @override
@@ -131,5 +134,4 @@ setDateOfNewDoctor() async {
   });
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 

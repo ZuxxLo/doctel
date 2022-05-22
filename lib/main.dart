@@ -23,8 +23,7 @@ Future<void> main() async {
       timeleft = value['timeleft'];
     },
   );
-  timeLeftvf = timeleft - Timestamp.fromDate(DateTime.now()).seconds;
-  Timer(Duration(seconds: timeLeftvf), () async {
+  Timer(Duration(seconds: timeleft - Timestamp.fromDate(DateTime.now()).seconds>0 ? timeleft - Timestamp.fromDate(DateTime.now()).seconds : 2), () async {
     await FirebaseFirestore.instance
         .collection('patients')
         .doc('43vju27PaOZptGuNQvDC') //the doctor clicked uid

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Page/Docter_Profil/calendar.dart';
 import 'all_mes_rdvs.dart';
 import 'constants.dart';
 
@@ -10,20 +11,22 @@ class AllMesrdv extends StatelessWidget {
     return  Scaffold(
       appBar: rdvAppBar(),
       backgroundColor: bcgcolor,
-      body: const BodyAllMesRdvs(),
+      body:  BodyAllMesRdvs(),
     );
   }
 
   AppBar rdvAppBar() {
     return AppBar(
+      toolbarHeight: 35,
       backgroundColor: bcgcolor,
       leading: const BackButton(color: Colors.black),
+      title:  const Text(
+              "Appointments History",
+              style: TextStyle(color: Colors.black),
+      
+            ), 
       centerTitle: true,
-      title: const Text(
-        "Appointments History",
-        style: TextStyle(color: Colors.black),
-
-      ),
+   
       elevation: 0,
     );
   }
